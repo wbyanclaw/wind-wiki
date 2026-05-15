@@ -68,7 +68,12 @@ pub async fn run(wiki: &Wiki) -> Result<LintResult> {
 
     let mut issues = Vec::new();
 
-    // ── Static checks (no LLM needed) ──────────────────────────
+    // Pre-compile regexes (avoid creating inside loop)
+    let wikilink_re = Regex::new(r"\[\[([^\]|]+)(?:\|[^\]]+)?\]\]").unwrap();
+    let heading_re = Regex::new(r"^#{1,6}\s+(.+)$").unwrap();
+    let cross_heading_re = Regex::new(r"^#\s+(.+)$").unwrap();
+
+    // ── Per-file checks ────────────────────────────────────────────
 
     for file in &files {
         // 1. Empty file
@@ -92,7 +97,6 @@ pub async fn run(wiki: &Wiki) -> Result<LintResult> {
         }
 
         // 3. Check for broken wikilinks
-        let wikilink_re = Regex::new(r"\[\[([^\]|]+)(?:\|[^\]]+)?\]\]").unwrap();
         for cap in wikilink_re.captures_iter(&file.content) {
             let linked = cap.get(1).unwrap().as_str();
             let linked_md = format!("{}.md", linked.trim());
@@ -108,7 +112,6 @@ pub async fn run(wiki: &Wiki) -> Result<LintResult> {
         }
 
         // 4. Duplicate headings within file
-        let heading_re = Regex::new(r"^#{1,6}\s+(.+)$").unwrap();
         let mut headings: std::collections::HashMap<String, u32> = std::collections::HashMap::new();
         for (line_num, line) in file.content.lines().enumerate() {
             if let Some(cap) = heading_re.captures(line) {
@@ -125,7 +128,7 @@ pub async fn run(wiki: &Wiki) -> Result<LintResult> {
             }
         }
 
-        // 5. Very short content (likely placeholder)
+        // 5. Very short content
         let word_count = file.content.split_whitespace().count();
         if word_count < 20 {
             issues.push(LintIssue {
@@ -142,14 +145,10 @@ pub async fn run(wiki: &Wiki) -> Result<LintResult> {
     let mut all_headings: std::collections::HashMap<String, Vec<String>> =
         std::collections::HashMap::new();
     for file in &files {
-        let heading_re = Regex::new(r"^#\s+(.+)$").unwrap();
         for line in file.content.lines() {
-            if let Some(cap) = heading_re.captures(line) {
+            if let Some(cap) = cross_heading_re.captures(line) {
                 let h = cap.get(1).unwrap().as_str().trim().to_string();
-                all_headings
-                    .entry(h)
-                    .or_default()
-                    .push(file.rel_path.clone());
+                all_headings.entry(h).or_default().push(file.rel_path.clone());
             }
         }
     }
@@ -183,7 +182,7 @@ fn collect_markdown_files(dir: &std::path::Path) -> Result<Vec<MdFile>> {
         .into_iter()
         .filter_map(|e| e.ok())
         .filter(|e| {
-            e.path().extension().map_or(false, |ext| ext == "md")
+            e.path().extension().is_some_and(|ext| ext == "md")
         })
     {
         let rel = entry

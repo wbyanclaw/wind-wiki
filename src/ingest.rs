@@ -8,7 +8,6 @@
 use anyhow::Result;
 use std::path::Path;
 
-use crate::config::Paths;
 use crate::llm::Message;
 use crate::wiki::Wiki;
 
@@ -168,8 +167,8 @@ fn derive_title(path: &Path, content: &str) -> String {
     // Try to extract first H1 from Markdown
     if let Some(first_line) = content.lines().next() {
         let trimmed = first_line.trim();
-        if trimmed.starts_with("# ") {
-            return trimmed[2..].trim().to_string();
+        if let Some(rest) = trimmed.strip_prefix("# ") {
+            return rest.trim().to_string();
         }
     }
 

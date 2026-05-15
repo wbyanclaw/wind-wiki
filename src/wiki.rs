@@ -91,7 +91,7 @@ impl Wiki {
         for entry in WalkDir::new(wiki_dir)
             .into_iter()
             .filter_map(|e| e.ok())
-            .filter(|e| e.path().extension().map_or(false, |ext| ext == "md"))
+            .filter(|e| e.path().extension().is_some_and(|ext| ext == "md"))
         {
             if let Ok(meta) = entry.metadata() {
                 file_count += 1;
@@ -145,7 +145,7 @@ impl Wiki {
         for entry in WalkDir::new(wiki_dir)
             .into_iter()
             .filter_map(|e| e.ok())
-            .filter(|e| e.path().extension().map_or(false, |ext| ext == "md"))
+            .filter(|e| e.path().extension().is_some_and(|ext| ext == "md"))
         {
             let path = entry.path();
             let content = std::fs::read_to_string(path)?;
