@@ -1,0 +1,60 @@
+[package]
+name = "wind-wiki"
+version = "0.1.0"
+edition = "2021"
+description = "LLM-powered Wiki SDK — Ingest, Query, and Lint pipelines"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/wbyanclaw/wind-wiki"
+rust-version = "1.75"
+keywords = ["wiki", "knowledge-base", "llm", "ai", "rag"]
+categories = ["command-line-utilities", "knowledge-management"]
+
+[dependencies]
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# HTTP client for LLM API calls
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+
+# Error handling
+anyhow = "1"
+thiserror = "1"
+
+# File operations
+walkdir = "2"
+directories = "5"
+lopdf = "0.34"   # PDF parsing
+scraper = "0.21" # HTML text extraction
+
+# Markdown parsing / manipulation
+pulldown-cmark = "0.12"
+regex = "1"
+
+# Date / time
+chrono = { version = "0.4", features = ["serde"] }
+
+# URL parsing
+url = "2"
+
+# Async iterators
+futures = "0.3"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+tempfile = "3"
+tokio-test = "0.4"
+
+[[example]]
+name = "cli"
+path = "examples/cli.rs"
