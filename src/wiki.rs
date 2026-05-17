@@ -39,6 +39,22 @@ impl Wiki {
         Ok(Self { config, llm })
     }
 
+    /// Create a Wiki instance without LLM (for local-only operations like status).
+    pub fn new_local(config: Config) -> anyhow::Result<Self> {
+        // Use a placeholder LLM config — won't be used for local-only commands
+        let llm = LlmClient::new(crate::config::LlmConfig {
+            provider: crate::config::LlmProvider::Anthropic,
+            model: String::new(),
+            api_key: String::new(),
+            base_url: None,
+        });
+
+        // Ensure wiki directory exists
+        config.wiki_dir()?;
+
+        Ok(Self { config, llm })
+    }
+
     /// Create from environment variables only (no config file).
     pub async fn from_env() -> anyhow::Result<Self> {
         Self::new(Config::default()).await
