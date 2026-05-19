@@ -1,4 +1,4 @@
-//! Example CLI for wind-wiki.
+//! Example CLI for llm-wiki.
 //!
 //! Usage:
 //!   cargo run --example cli -- ingest <file>
@@ -14,7 +14,7 @@ use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use tracing_subscriber::{fmt, prelude::*, EnvFilter};
 
-use wind_wiki::{Config, Wiki};
+use llm_wiki::{Config, Wiki};
 
 #[derive(Parser)]
 struct Cli {
@@ -83,7 +83,7 @@ fn parse_datetime(s: &str) -> chrono::DateTime<chrono::Utc> {
 async fn main() -> anyhow::Result<()> {
     tracing_subscriber::registry()
         .with(fmt::layer())
-        .with(EnvFilter::from_default_env().add_directive("wind_wiki=info".parse().unwrap()))
+        .with(EnvFilter::from_default_env().add_directive("llm_wiki=info".parse().unwrap()))
         .init();
 
     let cli = Cli::parse();
@@ -120,9 +120,9 @@ async fn main() -> anyhow::Result<()> {
                 println!("\n### 问题列表");
                 for issue in &result.issues {
                     let severity = match issue.severity {
-                        wind_wiki::lint::IssueSeverity::Error => "❌",
-                        wind_wiki::lint::IssueSeverity::Warning => "⚠️",
-                        wind_wiki::lint::IssueSeverity::Info => "ℹ️",
+                        llm_wiki::lint::IssueSeverity::Error => "❌",
+                        llm_wiki::lint::IssueSeverity::Warning => "⚠️",
+                        llm_wiki::lint::IssueSeverity::Info => "ℹ️",
                     };
                     println!("{} [{}] {}", severity, issue.file, issue.message);
                 }
@@ -167,9 +167,9 @@ async fn main() -> anyhow::Result<()> {
                 );
                 for f in &result.files {
                     let icon = match f.status {
-                        wind_wiki::rebuild::RebuildStatus::Rebuilt => "🔄",
-                        wind_wiki::rebuild::RebuildStatus::Skipped => "⏭️ ",
-                        wind_wiki::rebuild::RebuildStatus::Failed => "❌",
+                        llm_wiki::rebuild::RebuildStatus::Rebuilt => "🔄",
+                        llm_wiki::rebuild::RebuildStatus::Skipped => "⏭️ ",
+                        llm_wiki::rebuild::RebuildStatus::Failed => "❌",
                     };
                     println!("{} {} | {}", icon, f.source, f.modified_at);
                 }
@@ -208,7 +208,7 @@ async fn main() -> anyhow::Result<()> {
 }
 
 /// Print the graph result as human-readable text.
-fn print_graph_text(result: &wind_wiki::GraphResult) {
+fn print_graph_text(result: &llm_wiki::GraphResult) {
     if result.nodes.is_empty() {
         println!("📭 知识库为空，暂无图谱。");
         return;
@@ -246,7 +246,7 @@ fn print_graph_text(result: &wind_wiki::GraphResult) {
 async fn run_demo() -> anyhow::Result<()> {
     use std::io::Write;
 
-    println!("🎯 wind-wiki 演示开始！\n");
+    println!("🎯 llm-wiki 演示开始！\n");
     println!("本演示将在临时目录中创建一个示例 wiki，无需 API key。\n");
 
     // Create a temp workspace with sample files
@@ -334,7 +334,7 @@ Q1 总营收为 1.2 亿元，同比增长 30%。
 
     // Show graph
     let config = Config {
-        paths: wind_wiki::config::Paths {
+        paths: llm_wiki::config::Paths {
             workspace,
             wiki: wiki_dir,
             system_md,

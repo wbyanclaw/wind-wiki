@@ -1,4 +1,4 @@
-//! wind-wiki — LLM-powered Wiki SDK
+//! llm-wiki — LLM-powered Wiki SDK
 //!
 //! Provides three pipelines:
 //! - **Ingest**: Source file → LLM edit → Wiki Markdown
@@ -8,7 +8,7 @@
 //! ## Quick start
 //!
 //! ```no_run
-//! use wind_wiki::Wiki;
+//! use llm_wiki::Wiki;
 //!
 //! # async fn run() -> anyhow::Result<()> {
 //! let wiki = Wiki::new(Default::default()).await?;

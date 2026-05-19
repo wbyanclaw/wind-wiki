@@ -114,14 +114,13 @@ wind wiki status
 ## Dependencies
 
 ```
-wind-cli
-wind-wiki  → llm-wiki
-              ├── reqwest      (HTTP → Anthropic/OpenAI API)
-              ├── lopdf       (PDF 文本提取)
-              ├── scraper     (HTML 文本提取)
-              ├── tokio       (async runtime)
-              ├── directories (跨平台路径)
-              └── chrono      (时间戳)
+llm-wiki
+├── reqwest      (HTTP → Anthropic/OpenAI API)
+├── lopdf       (PDF 文本提取)
+├── scraper     (HTML 文本提取)
+├── tokio       (async runtime)
+├── directories (跨平台路径)
+└── chrono      (时间戳)
 ```
 
 ## Directory Structure
