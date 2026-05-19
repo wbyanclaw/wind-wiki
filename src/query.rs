@@ -5,6 +5,7 @@
 //! 3. Return synthesized answer
 
 use anyhow::Result;
+use regex;
 use std::path::PathBuf;
 
 use crate::llm::Message;
@@ -61,9 +62,16 @@ pub async fn run(wiki: &Wiki, question: &str) -> Result<QueryResult> {
     let llm = wiki.llm();
     let messages = &[Message::system(&prompt)];
     let answer = llm.chat(messages).await?;
+    let answer = strip_think_tags(&answer);
 
     let sources: Vec<PathBuf> = files.iter().map(|f| f.path.clone()).collect();
     Ok(QueryResult::ok(question.to_string(), answer, sources))
+}
+
+/// Strip LLM thinking tags (<think>/</think>) from model responses.
+fn strip_think_tags(s: &str) -> String {
+    let re = regex::Regex::new(r"(?s)<think>.*?</think>").unwrap();
+    re.replace_all(s, "").to_string()
 }
 
 /// Build a combined context string from wiki files.
