@@ -33,9 +33,15 @@ pub mod llm;
 pub mod ingest;
 pub mod query;
 pub mod lint;
+pub mod graph;
+pub mod rebuild;
+pub mod init;
 
 pub use config::{Config, LlmProvider};
 pub use wiki::{Wiki, Status};
 pub use ingest::IngestResult;
 pub use query::QueryResult;
 pub use lint::LintResult;
+pub use graph::{GraphResult, GraphNode, GraphEdge};
+pub use rebuild::RebuildResult;
+pub use init::InitResult;

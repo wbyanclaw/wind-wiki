@@ -222,6 +222,11 @@ impl Config {
             Ok(DEFAULT_SYSTEM_MD.to_string())
         }
     }
+
+    /// Get the SYSTEM.md path.
+    pub fn system_md_path(&self) -> PathBuf {
+        self.paths.system_md.clone()
+    }
 }
 
 fn config_file_path() -> PathBuf {
@@ -261,6 +266,6 @@ mod tests {
     fn test_default_config() {
         let config = Config::default();
         assert!(config.llm.is_none());
-        assert!(config.paths.wiki.exists() || true); // may or may not exist
+        let _ = config.paths.wiki.exists(); // may or may not exist
     }
 }

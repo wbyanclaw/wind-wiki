@@ -8,6 +8,7 @@ use crate::ingest::{self, IngestResult};
 use crate::lint::{self, LintResult};
 use crate::llm::LlmClient;
 use crate::query::{self, QueryResult};
+use crate::rebuild::{self, RebuildResult};
 
 /// Wiki — main entry point for the LLM Wiki SDK.
 ///
@@ -82,6 +83,31 @@ impl Wiki {
     /// Lint the wiki for health issues (deadlinks, duplicates, stale content).
     pub async fn lint(&self) -> anyhow::Result<LintResult> {
         lint::run(self).await
+    }
+
+    /// Build the wikilink knowledge graph with backlinks.
+    pub fn graph(&self) -> anyhow::Result<crate::graph::GraphResult> {
+        crate::graph::run(self)
+    }
+
+    /// Rebuild wiki entries for source files modified since `since`.
+    ///
+    /// Only re-ingests source files whose mtime is newer than `since`.
+    /// If `dry_run` is true, returns the list of files that would be rebuilt without rebuilding them.
+    pub async fn rebuild_since(
+        &self,
+        since: chrono::DateTime<chrono::Utc>,
+        dry_run: bool,
+    ) -> anyhow::Result<RebuildResult> {
+        rebuild::run(self, since, dry_run).await
+    }
+
+    /// Initialise the wiki directory structure and a default SYSTEM.md.
+    ///
+    /// Creates the wiki and workspace directories, plus a default `SYSTEM.md`
+    /// if it doesn't exist. Returns the paths created.
+    pub fn init(&self) -> anyhow::Result<crate::init::InitResult> {
+        crate::init::run(self)
     }
 
     // ── Status ─────────────────────────────────────────────────

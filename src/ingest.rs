@@ -219,6 +219,10 @@ fn build_ingest_prompt(system_md: &str, title: &str, content: &str, _ext: &str) 
 - 使用 Markdown 格式
 - 包含 `<!-- source: filename -->` 元数据注释
 - 简洁准确，不得编造原文没有的信息
+- **Wikilinks**：在"相关说明"或正文适当位置，添加 `[[相关主题]]` 格式的内链
+  - 如果有其他已知 wiki 主题与本文档相关，用 `[[主题名]]` 链接
+  - 链接目标使用简短、清晰的文件名风格（如 `Q1营收摘要`、`市场竞争分析`）
+  - 每个页面至少添加 1-3 个相关 wikilinks
 "#
     )
 }
