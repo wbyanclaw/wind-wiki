@@ -74,7 +74,7 @@ export WIND_WIKI_PROVIDER="anthropic"
 ## Rust API
 
 ```rust
-use llm_wiki::Wiki;
+use wind_wiki::Wiki;
 
 let wiki = Wiki::new(Default::default()).await?;
 
@@ -114,7 +114,7 @@ wind wiki status
 ## Dependencies
 
 ```
-llm-wiki
+wind-wiki
 ├── reqwest      (HTTP → Anthropic/OpenAI API)
 ├── lopdf       (PDF 文本提取)
 ├── scraper     (HTML 文本提取)

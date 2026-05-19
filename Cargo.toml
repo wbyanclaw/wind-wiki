@@ -1,5 +1,5 @@
 [package]
-name = "llm-wiki"
+name = "wind-wiki"
 version = "0.1.4"
 edition = "2021"
 description = "LLM-powered Wiki SDK — Ingest, Query, and Lint pipelines"
