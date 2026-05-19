@@ -83,7 +83,7 @@ impl LlmClient {
             .as_deref()
             .unwrap_or("https://api.anthropic.com");
 
-        let url = format!("{}/v1/messages", base_url.trim_end_matches('/'));
+        let url = format!("{}/v1/messages/", base_url.trim_end_matches('/'));
 
         let response = self
             .http
@@ -142,7 +142,7 @@ impl LlmClient {
             .as_deref()
             .unwrap_or("https://api.openai.com");
 
-        let url = format!("{}/v1/chat/completions", base_url.trim_end_matches('/'));
+        let url = format!("{}/v1/chat/completions/", base_url.trim_end_matches('/'));
 
         let response = self
             .http
