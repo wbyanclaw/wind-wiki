@@ -1,4 +1,4 @@
-# llm-wiki — LLM-powered Wiki SDK
+# wind-wiki — LLM-powered Wiki SDK
 
 A Rust crate for building AI-native knowledge bases. Ingest documents, query your wiki with natural language, and lint for health issues — all powered by LLMs.
 
