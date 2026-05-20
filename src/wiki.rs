@@ -14,7 +14,7 @@ use crate::rebuild::{self, RebuildResult};
 ///
 /// ```no_run
 /// # async fn run() -> anyhow::Result<()> {
-/// use wind_wiki::Wiki;
+/// use llm_wiki_lib::Wiki;
 ///
 /// let wiki = Wiki::new(Default::default()).await?;
 /// let status = wiki.status()?;
