@@ -121,8 +121,9 @@ jobs:
         run: |
           mkdir -p dist
           # Note: Linux musl and macOS x86_64 skipped due to CI resource constraints
-          cp artifacts/llm-wiki-lib-macOS\ ARM64/llm-wiki-lib-macOS\ ARM64 dist/llm-wiki-lib-macos-arm64
-          cp artifacts/llm-wiki-lib-Windows\ x86_64/llm-wiki-lib-Windows\ x86_64.exe dist/llm-wiki-lib-windows-x86_64.exe
+          # Artifact paths: <artifact-name>/
+          cp "artifacts/llm-wiki-lib-macOS ARM64/cli" dist/llm-wiki-lib-macos-arm64
+          cp "artifacts/llm-wiki-lib-Windows x86_64/cli.exe" dist/llm-wiki-lib-windows-x86_64.exe
           chmod +x dist/llm-wiki-lib-macos-arm64
 
       - name: SHA256 checksums
