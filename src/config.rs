@@ -1,4 +1,4 @@
-//! Configuration for wind-wiki.
+//! Configuration for llm-wiki-lib.
 //!
 //! Loads from `~/.config/wind/config.toml` with sensible defaults.
 //! Supports both Anthropic and OpenAI providers.
@@ -68,7 +68,7 @@ impl LlmConfig {
     }
 }
 
-/// Paths used by wind-wiki.
+/// Paths used by llm-wiki-lib.
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct Paths {
     /// Directory containing source files (user workspace).

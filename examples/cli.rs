@@ -1,4 +1,4 @@
-//! Example CLI for wind-wiki.
+//! Example CLI for llm-wiki-lib.
 //!
 //! Usage:
 //!   cargo run --example cli -- ingest <file>
@@ -14,7 +14,7 @@ use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use tracing_subscriber::{fmt, prelude::*, EnvFilter};
 
-use wind_wiki::{Config, Wiki};
+use llm_wiki_lib::{Config, Wiki};
 
 #[derive(Parser)]
 struct Cli {
@@ -246,7 +246,7 @@ fn print_graph_text(result: &wind_wiki::GraphResult) {
 async fn run_demo() -> anyhow::Result<()> {
     use std::io::Write;
 
-    println!("🎯 wind-wiki 演示开始！\n");
+    println!("🎯 llm-wiki-lib 演示开始！\n");
     println!("本演示将在临时目录中创建一个示例 wiki，无需 API key。\n");
 
     // Create a temp workspace with sample files

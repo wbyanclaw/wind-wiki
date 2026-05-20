@@ -1,4 +1,4 @@
-# wind-wiki — LLM-powered Wiki SDK
+# llm-wiki-lib — LLM-powered Wiki SDK
 
 A Rust crate for building AI-native knowledge bases. Ingest documents, query your wiki with natural language, and lint for health issues — all powered by LLMs.
 
@@ -74,7 +74,7 @@ export WIND_WIKI_PROVIDER="anthropic"
 ## Rust API
 
 ```rust
-use wind_wiki::Wiki;
+use llm_wiki_lib::Wiki;
 
 let wiki = Wiki::new(Default::default()).await?;
 
@@ -114,7 +114,7 @@ wind wiki status
 ## Dependencies
 
 ```
-wind-wiki
+llm-wiki-lib
 ├── reqwest      (HTTP → Anthropic/OpenAI API)
 ├── lopdf       (PDF 文本提取)
 ├── scraper     (HTML 文本提取)
