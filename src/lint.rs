@@ -41,15 +41,18 @@ pub struct LintResult {
 
 impl LintResult {
     pub fn new(file_count: u32, issues: Vec<LintIssue>) -> Self {
-        let errors = issues.iter().filter(|i| i.severity == IssueSeverity::Error).count();
-        let warnings = issues.iter().filter(|i| i.severity == IssueSeverity::Warning).count();
+        let errors = issues
+            .iter()
+            .filter(|i| i.severity == IssueSeverity::Error)
+            .count();
+        let warnings = issues
+            .iter()
+            .filter(|i| i.severity == IssueSeverity::Warning)
+            .count();
         let summary = if issues.is_empty() {
             "✅ Wiki 健康，没有发现问题".to_string()
         } else {
-            format!(
-                "发现问题: {} 个错误, {} 个警告",
-                errors, warnings
-            )
+            format!("发现问题: {} 个错误, {} 个警告", errors, warnings)
         };
 
         Self {
@@ -148,7 +151,10 @@ pub async fn run(wiki: &Wiki) -> Result<LintResult> {
         for line in file.content.lines() {
             if let Some(cap) = cross_heading_re.captures(line) {
                 let h = cap.get(1).unwrap().as_str().trim().to_string();
-                all_headings.entry(h).or_default().push(file.rel_path.clone());
+                all_headings
+                    .entry(h)
+                    .or_default()
+                    .push(file.rel_path.clone());
             }
         }
     }
@@ -181,9 +187,7 @@ fn collect_markdown_files(dir: &std::path::Path) -> Result<Vec<MdFile>> {
     for entry in WalkDir::new(dir)
         .into_iter()
         .filter_map(|e| e.ok())
-        .filter(|e| {
-            e.path().extension().is_some_and(|ext| ext == "md")
-        })
+        .filter(|e| e.path().extension().is_some_and(|ext| ext == "md"))
     {
         let rel = entry
             .path()

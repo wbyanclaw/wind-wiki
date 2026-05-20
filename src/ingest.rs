@@ -32,7 +32,13 @@ pub struct IngestResult {
 }
 
 impl IngestResult {
-    pub fn ok(wiki_path: String, title: String, source: String, source_chars: usize, wiki_chars: usize) -> Self {
+    pub fn ok(
+        wiki_path: String,
+        title: String,
+        source: String,
+        source_chars: usize,
+        wiki_chars: usize,
+    ) -> Self {
         Self {
             ok: true,
             wiki_path,
@@ -90,9 +96,7 @@ fn extract_text(path: &Path) -> Result<(String, String)> {
         .to_lowercase();
 
     let content = match ext.as_str() {
-        "md" | "markdown" | "txt" | "text" => {
-            std::fs::read_to_string(path)?
-        }
+        "md" | "markdown" | "txt" | "text" => std::fs::read_to_string(path)?,
         "pdf" => extract_pdf(path)?,
         "html" | "htm" => extract_html(path)?,
         "json" => extract_json(path)?,

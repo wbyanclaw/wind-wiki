@@ -40,11 +40,7 @@ pub enum RebuildStatus {
 }
 
 /// Run the rebuild pipeline.
-pub async fn run(
-    wiki: &Wiki,
-    since: DateTime<Utc>,
-    dry_run: bool,
-) -> Result<RebuildResult> {
+pub async fn run(wiki: &Wiki, since: DateTime<Utc>, dry_run: bool) -> Result<RebuildResult> {
     let workspace = wiki.config().workspace_dir();
 
     // Collect source files

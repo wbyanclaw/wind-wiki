@@ -3,10 +3,10 @@
 //! Loads from `~/.config/wind/config.toml` with sensible defaults.
 //! Supports both Anthropic and OpenAI providers.
 
+use anyhow::{Context, Result};
 use directories::ProjectDirs;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
-use anyhow::{Context, Result};
 
 /// LLM provider type.
 #[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq)]
@@ -181,8 +181,8 @@ impl Config {
         }
 
         // Try environment variables
-        let provider = std::env::var("WIND_WIKI_PROVIDER")
-            .unwrap_or_else(|_| "anthropic".to_string());
+        let provider =
+            std::env::var("WIND_WIKI_PROVIDER").unwrap_or_else(|_| "anthropic".to_string());
         let model = std::env::var("WIND_WIKI_MODEL")
             .unwrap_or_else(|_| "claude-haiku-4-20250514".to_string());
         let api_key = std::env::var("WIND_WIKI_API_KEY")
@@ -256,8 +256,14 @@ mod tests {
 
     #[test]
     fn test_provider_from_str() {
-        assert!(matches!(LlmProvider::from("anthropic"), LlmProvider::Anthropic));
-        assert!(matches!(LlmProvider::from("ANTHROPIC"), LlmProvider::Anthropic));
+        assert!(matches!(
+            LlmProvider::from("anthropic"),
+            LlmProvider::Anthropic
+        ));
+        assert!(matches!(
+            LlmProvider::from("ANTHROPIC"),
+            LlmProvider::Anthropic
+        ));
         assert!(matches!(LlmProvider::from("openai"), LlmProvider::OpenAi));
         assert!(matches!(LlmProvider::from("xyz"), LlmProvider::Unknown));
     }

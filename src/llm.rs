@@ -102,10 +102,14 @@ impl LlmClient {
             bail!("Anthropic API error {}: {}", status, text);
         }
 
-        let parsed: AnthropicResponse = serde_json::from_str(&text)
-            .context("failed to parse Anthropic response")?;
+        let parsed: AnthropicResponse =
+            serde_json::from_str(&text).context("failed to parse Anthropic response")?;
 
-        Ok(parsed.content.first().and_then(|c| c.text.clone()).unwrap_or_default())
+        Ok(parsed
+            .content
+            .first()
+            .and_then(|c| c.text.clone())
+            .unwrap_or_default())
     }
 
     // ── OpenAI ───────────────────────────────────────────────────
@@ -173,8 +177,8 @@ impl LlmClient {
             content: String,
         }
 
-        let parsed: OpenAiResponse = serde_json::from_str(&text)
-            .context("failed to parse OpenAI response")?;
+        let parsed: OpenAiResponse =
+            serde_json::from_str(&text).context("failed to parse OpenAI response")?;
 
         Ok(parsed
             .choices
@@ -209,4 +213,3 @@ struct AnthropicContentBlock {
     #[serde(default)]
     text: Option<String>,
 }
-

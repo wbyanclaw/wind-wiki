@@ -133,7 +133,11 @@ pub fn run(wiki: &Wiki) -> Result<GraphResult> {
     let mut nodes = Vec::new();
     for entry in &files {
         let path = entry.path();
-        let name = path.file_stem().and_then(|s| s.to_str()).unwrap_or("").to_string();
+        let name = path
+            .file_stem()
+            .and_then(|s| s.to_str())
+            .unwrap_or("")
+            .to_string();
         let content = std::fs::read_to_string(path)?;
 
         let headings: Vec<String> = heading_re

@@ -209,11 +209,7 @@ impl Wiki {
     }
 
     /// Write a wiki entry to disk.
-    pub(crate) fn write_wiki_entry(
-        &self,
-        title: &str,
-        content: &str,
-    ) -> anyhow::Result<PathBuf> {
+    pub(crate) fn write_wiki_entry(&self, title: &str, content: &str) -> anyhow::Result<PathBuf> {
         let safe_name = sanitize_filename(title);
         let wiki_dir = self.config.wiki_dir()?;
         let path = wiki_dir.join(format!("{}.md", safe_name));
@@ -237,10 +233,7 @@ fn sanitize_filename(name: &str) -> String {
     let s = re.replace_all(s, "_");
     let re2 = regex::Regex::new(r"_+").unwrap();
     let s = re2.replace_all(&s, "_");
-    s.split_whitespace()
-        .take(80)
-        .collect::<Vec<_>>()
-        .join("_")
+    s.split_whitespace().take(80).collect::<Vec<_>>().join("_")
 }
 
 /// A single wiki Markdown file.

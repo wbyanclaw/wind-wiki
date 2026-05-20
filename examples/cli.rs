@@ -155,10 +155,7 @@ async fn main() -> anyhow::Result<()> {
             let since_dt = parse_datetime(since);
             let result = wiki.rebuild_since(since_dt, *dry_run).await?;
             if result.files.is_empty() {
-                println!(
-                    "📭 没有找到自 {} 以来修改的源文件。",
-                    result.since
-                );
+                println!("📭 没有找到自 {} 以来修改的源文件。", result.since);
             } else {
                 println!(
                     "📦 Rebuild（{}），自 {} 以来：",
@@ -215,16 +212,15 @@ fn print_graph_text(result: &wind_wiki::GraphResult) {
     }
 
     println!("🕸️  Wiki 知识图谱\n");
-    println!("  {} 个节点，{} 条边\n", result.node_count, result.edge_count);
+    println!(
+        "  {} 个节点，{} 条边\n",
+        result.node_count, result.edge_count
+    );
 
     // Show most-connected pages first (highest backlinks)
     println!("### 核心页面（最多反向链接）");
     for node in result.nodes.iter().filter(|n| n.backlinks > 0).take(10) {
-        println!(
-            "  📄 {} ← {} 个页面链接",
-            node.name,
-            node.backlinks
-        );
+        println!("  📄 {} ← {} 个页面链接", node.name, node.backlinks);
     }
 
     // Show orphan links (linked but don't exist)

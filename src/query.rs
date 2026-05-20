@@ -30,7 +30,10 @@ impl QueryResult {
             ok: true,
             question,
             answer,
-            sources: sources.into_iter().map(|p| p.to_string_lossy().to_string()).collect(),
+            sources: sources
+                .into_iter()
+                .map(|p| p.to_string_lossy().to_string())
+                .collect(),
             no_wiki_content: false,
         }
     }

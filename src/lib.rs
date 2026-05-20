@@ -28,20 +28,20 @@
 //! ```
 
 pub mod config;
-pub mod wiki;
-pub mod llm;
-pub mod ingest;
-pub mod query;
-pub mod lint;
 pub mod graph;
-pub mod rebuild;
+pub mod ingest;
 pub mod init;
+pub mod lint;
+pub mod llm;
+pub mod query;
+pub mod rebuild;
+pub mod wiki;
 
 pub use config::{Config, LlmProvider};
-pub use wiki::{Wiki, Status};
+pub use graph::{GraphEdge, GraphNode, GraphResult};
 pub use ingest::IngestResult;
-pub use query::QueryResult;
-pub use lint::LintResult;
-pub use graph::{GraphResult, GraphNode, GraphEdge};
-pub use rebuild::RebuildResult;
 pub use init::InitResult;
+pub use lint::LintResult;
+pub use query::QueryResult;
+pub use rebuild::RebuildResult;
+pub use wiki::{Status, Wiki};
