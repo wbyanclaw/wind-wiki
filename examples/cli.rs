@@ -1,4 +1,4 @@
-//! Example CLI for llm-wiki.
+//! Example CLI for wind-wiki.
 //!
 //! Usage:
 //!   cargo run --example cli -- ingest <file>
@@ -246,7 +246,7 @@ fn print_graph_text(result: &wind_wiki::GraphResult) {
 async fn run_demo() -> anyhow::Result<()> {
     use std::io::Write;
 
-    println!("🎯 llm-wiki 演示开始！\n");
+    println!("🎯 wind-wiki 演示开始！\n");
     println!("本演示将在临时目录中创建一个示例 wiki，无需 API key。\n");
 
     // Create a temp workspace with sample files
