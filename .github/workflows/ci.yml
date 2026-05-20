@@ -1,4 +1,4 @@
-# llm-wiki CI/CD Pipeline
+# wind-wiki CI/CD Pipeline
 # Tests, clippy, doc tests, and publish to crates.io on tags
 
 name: CI
@@ -83,7 +83,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: llm-wiki-${{ matrix.platform }}
+          name: wind-wiki-${{ matrix.platform }}
           path: target/${{ matrix.target }}/release/examples/cli
           retention-days: 1
 
@@ -123,16 +123,16 @@ jobs:
       - name: Prepare binaries
         run: |
           mkdir -p dist
-          cp artifacts/llm-wiki-Linux\ x86_64/llm-wiki-Linux\ x86_64 dist/llm-wiki-linux-x86_64
-          cp artifacts/llm-wiki-macOS\ x86_64/llm-wiki-macOS\ x86_64 dist/llm-wiki-macos-x86_64
-          cp artifacts/llm-wiki-macOS\ ARM64/llm-wiki-macOS\ ARM64 dist/llm-wiki-macos-arm64
-          cp artifacts/llm-wiki-Windows\ x86_64/llm-wiki-Windows\ x86_64.exe dist/llm-wiki-windows-x86_64.exe
-          chmod +x dist/llm-wiki-linux-x86_64 dist/llm-wiki-macos-x86_64 dist/llm-wiki-macos-arm64
+          cp artifacts/wind-wiki-Linux\ x86_64/wind-wiki-Linux\ x86_64 dist/wind-wiki-linux-x86_64
+          cp artifacts/wind-wiki-macOS\ x86_64/wind-wiki-macOS\ x86_64 dist/wind-wiki-macos-x86_64
+          cp artifacts/wind-wiki-macOS\ ARM64/wind-wiki-macOS\ ARM64 dist/wind-wiki-macos-arm64
+          cp artifacts/wind-wiki-Windows\ x86_64/wind-wiki-Windows\ x86_64.exe dist/wind-wiki-windows-x86_64.exe
+          chmod +x dist/wind-wiki-linux-x86_64 dist/wind-wiki-macos-x86_64 dist/wind-wiki-macos-arm64
 
       - name: SHA256 checksums
         run: |
           cd dist
-          sha256sum llm-wiki-* > SHA256SUMS.txt
+          sha256sum wind-wiki-* > SHA256SUMS.txt
           cat SHA256SUMS.txt
 
       - name: Upload to release
@@ -141,8 +141,8 @@ jobs:
         run: |
           TAG_NAME="${TAG##refs/tags/}"
           echo "Uploading to release: $TAG_NAME"
-          gh release upload "$TAG_NAME" dist/llm-wiki-linux-x86_64 --clobber
-          gh release upload "$TAG_NAME" dist/llm-wiki-macos-x86_64 --clobber
-          gh release upload "$TAG_NAME" dist/llm-wiki-macos-arm64 --clobber
-          gh release upload "$TAG_NAME" dist/llm-wiki-windows-x86_64.exe --clobber
+          gh release upload "$TAG_NAME" dist/wind-wiki-linux-x86_64 --clobber
+          gh release upload "$TAG_NAME" dist/wind-wiki-macos-x86_64 --clobber
+          gh release upload "$TAG_NAME" dist/wind-wiki-macos-arm64 --clobber
+          gh release upload "$TAG_NAME" dist/wind-wiki-windows-x86_64.exe --clobber
           gh release upload "$TAG_NAME" dist/SHA256SUMS.txt --clobber
