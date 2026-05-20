@@ -58,7 +58,6 @@ jobs:
   cross-build:
     name: Cross-build ${{ matrix.platform }}
     runs-on: ${{ matrix.runner }}
-    if: matrix.platform != 'Linux x86_64'  # Skip musl build
     strategy:
       fail-fast: false
       matrix:
