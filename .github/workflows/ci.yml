@@ -120,10 +120,9 @@ jobs:
       - name: Prepare binaries
         run: |
           mkdir -p dist
-          # Note: Linux musl and macOS x86_64 skipped due to CI resource constraints
-          # Artifact paths: <artifact-name>/
+          # Note: Linux musl, macOS x86_64, and Windows skipped due to CI constraints
+          # Only macOS ARM64 artifact is available
           cp "artifacts/llm-wiki-lib-macOS ARM64/cli" dist/llm-wiki-lib-macos-arm64
-          cp "artifacts/llm-wiki-lib-Windows x86_64/cli.exe" dist/llm-wiki-lib-windows-x86_64.exe
           chmod +x dist/llm-wiki-lib-macos-arm64
 
       - name: SHA256 checksums
@@ -138,7 +137,6 @@ jobs:
         run: |
           TAG_NAME="${TAG##refs/tags/}"
           echo "Uploading to release: $TAG_NAME"
-          # Note: Linux musl and macOS x86_64 binaries skipped
+          # Note: Only macOS ARM64 binary available
           gh release upload "$TAG_NAME" dist/llm-wiki-lib-macos-arm64 --clobber
-          gh release upload "$TAG_NAME" dist/llm-wiki-lib-windows-x86_64.exe --clobber
           gh release upload "$TAG_NAME" dist/SHA256SUMS.txt --clobber
